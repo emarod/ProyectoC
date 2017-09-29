@@ -1,11 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "lista.h"
-
-const int LST_POS_INV=1;
-const int LST_NO_INI=2;
-const int POS_NULA=3;
-const int ELE_NULO=4;
+#include "constantes.h"
 
 TLista crear_lista() {
     //Asigno la cantidad de memoria necesaria.
@@ -13,41 +9,23 @@ TLista crear_lista() {
 
     //Creo la lista.
 	lista->cantidad_elementos=0;
-	lista->primera_celda=NULL;
+	lista->primera_celda=POS_NULA;
 	printf("Creando lista \n");
 	printf("Cantidad de elementos=%i \n",lista->cantidad_elementos);
 
   return lista;
 }
 
-int l_insertar2(TLista lista, TPosicion pos, TElemento elem){
-    TCelda celdaPos = lista->primera_celda;
-    TCelda celdaAnterior = celdaPos;
-    TCelda nuevaCelda = (TCelda) malloc(sizeof(TCelda));
-    nuevaCelda->elemento=elem;
-    if(pos!=NULL){
-        while(&celdaPos != &pos){
-            celdaAnterior=celdaPos;
-            celdaPos= celdaPos->proxima_celda;
-        };
-        nuevaCelda->proxima_celda=celdaPos;
-        celdaAnterior->proxima_celda= nuevaCelda;
-    }
-    else{
-        nuevaCelda->proxima_celda=celdaPos;
-        lista->primera_celda=nuevaCelda;
-    }
-    lista->cantidad_elementos++;
-
-    return 0;
-}
-
 int l_insertar(TLista lista, TPosicion pos, TElemento elem){
     TCelda nuevaCelda = (TCelda) malloc(sizeof(TCelda));
     nuevaCelda->elemento=elem;
-    nuevaCelda->proxima_celda=NULL;
+    nuevaCelda->proxima_celda=POS_NULA;
 
-    if(pos==NULL || (l_anterior(lista,pos)==pos)){
+    if(lista==NULL){
+        exit(LST_NO_INI);
+    }
+
+    if(pos==POS_NULA || (l_anterior(lista,pos)==pos)){
         nuevaCelda->proxima_celda=lista->primera_celda;
         lista->primera_celda=nuevaCelda;
     }
@@ -57,7 +35,7 @@ int l_insertar(TLista lista, TPosicion pos, TElemento elem){
         anterior->proxima_celda=nuevaCelda;
     }
     lista->cantidad_elementos++;
-    return 0;
+    return TRUE;
 }
 
 int l_eliminar(TLista lista, TPosicion pos){
@@ -85,7 +63,6 @@ int l_eliminar(TLista lista, TPosicion pos){
 TPosicion l_primera(TLista lista){
 
     if(lista->primera_celda==NULL){
-        printf("Elimino mal");
         exit(LST_POS_INV);
     }
 
@@ -94,7 +71,7 @@ TPosicion l_primera(TLista lista){
 
 TPosicion l_ultima(TLista lista){
     TCelda celdaPos = lista->primera_celda;
-    while(celdaPos->proxima_celda!=NULL){
+    while(celdaPos->proxima_celda!=POS_NULA){
         celdaPos= celdaPos->proxima_celda;
     };
 
@@ -122,9 +99,6 @@ TPosicion l_anterior(TLista lista, TPosicion pos){
 TPosicion l_siguiente(TLista lista, TPosicion pos){
     if(lista->cantidad_elementos == 0){
         exit(LST_NO_INI);
-    }
-    if(pos!=NULL){
-        exit(POS_NULA);
     }
     return pos->proxima_celda;
 

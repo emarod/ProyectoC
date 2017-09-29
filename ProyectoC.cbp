@@ -33,6 +33,7 @@
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
+		<Unit filename="include/constantes.h" />
 		<Unit filename="include/lista.h" />
 		<Unit filename="lista.c">
 			<Option compilerVar="CC" />
