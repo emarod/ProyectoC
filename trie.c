@@ -122,7 +122,38 @@ int tr_pertenece(TTrie tr, char* str){
 
 //  Retorna  el  entero  asociado  al  string str dentro del trie.
 //  Si el string no pertenece al trie, retorna STR_NO_PER.
-int tr_recuperar(TTrie tr, char* str);
+int tr_recuperar(TTrie tr, char* str){
+    int recuperar;
+    TNodo cursor_trie= tr->raiz;
+    while(i<srtlen(str)){
+        TListaOrdenada hijos_cursor=cursor_trie->hijos;
+        if(lo_size(hijos_cursor)>0){
+            TPosicion pos_actual=lo_primera(hijos_cursor);
+            char letra_trie = ((TNodo)pos_actual->elemento)->rotulo;
+            int encontre= FALSE;
+            while(encontre==FALSE && pos_actual!=POS_NULA){
+                if(letra_trie!=str[i]){
+                    pos_actual= lo_siguiente(pos_actual);
+                }
+                else{
+                    encontre=TRUE;
+
+                }
+            }
+            if (encontre==FALSE){
+                recuperar=STR_NO_PER;
+            }
+            else{
+                recuperar=((TNodo) pos_actual->elemento)->contador;
+            }
+        }
+        i++;
+        cursor_trie= lo_siguiente(pos_actual);
+    }
+    return pertenece;
+}
+
+}
 
 //  Retorna la cantidad de palabras almacenadas en el trie.
 int tr_size(TTrie tr){
