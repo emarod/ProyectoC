@@ -5,12 +5,14 @@
 #include "lista_ordenada.h"
 
 //Ordena los elementos de Menor a Mayor
-int comparador(TElemento A,TElemento B)
+int comparador(TElemento a,TElemento b)
 {
-    if(A.a>B.a) {return 1;}
+    TNodo charA = ((TNodo) a)->rotulo;
+	TNodo charB = ((TNodo) b)->rotulo;
+    if(charA>charB) {return 1;}
     else
     {
-        if(A.a<B.a) {return -1;}
+        if(charA<charB) {return -1;}
         else {return 0;}
     }
 }
