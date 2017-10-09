@@ -115,7 +115,7 @@ int tr_pertenece(TTrie tr, char* str){
             }
         }
         i++;
-        cursor_trie= lo_siguiente(pos_actual);
+        cursor_trie= (TNodo) lo_siguiente(pos_actual)->elemento;
     }
     return pertenece;
 }
@@ -125,7 +125,8 @@ int tr_pertenece(TTrie tr, char* str){
 int tr_recuperar(TTrie tr, char* str){
     int recuperar;
     TNodo cursor_trie= tr->raiz;
-    while(i<srtlen(str)){
+    int i=0;
+    while(i<srtlen(str) && recuperar!=STR_NO_PER){
         TListaOrdenada hijos_cursor=cursor_trie->hijos;
         if(lo_size(hijos_cursor)>0){
             TPosicion pos_actual=lo_primera(hijos_cursor);
@@ -148,9 +149,9 @@ int tr_recuperar(TTrie tr, char* str){
             }
         }
         i++;
-        cursor_trie= lo_siguiente(pos_actual);
+        cursor_trie= (TNodo) lo_siguiente(pos_actual)->elemento;
     }
-    return pertenece;
+    return recuperar;
 }
 
 }
@@ -162,4 +163,46 @@ int tr_size(TTrie tr){
 
 //  Elimina el string str dentro del trie, liberando la memoria utilizada.
 //  Retorna verdadero en caso de operacion exitosa, y falso en caso contrario.
-int tr_eliminar(TTrie tr, char* str);
+int tr_eliminar(TTrie tr, char* str){
+    int eliminado=TRUE;
+    int i= 0;
+    TNodo cursor_trie= tr->raiz;
+    int pertenece = tr_pertenece(tr,str);
+    if(pertenece==TRUE){
+        while(i<srtlen(str)){
+            TListaOrdenada hijos_cursor=cursor_trie->hijos;
+            if(lo_size(hijos_cursor)>0){
+                TPosicion pos_actual=lo_primera(hijos_cursor);
+                char letra_trie = ((TNodo)pos_actual->elemento)->rotulo;
+                int encontre= FALSE;
+                while(encontre==FALSE){
+                    if(letra_trie!=str[i]){
+                        pos_actual= lo_siguiente(pos_actual);
+                    }
+                    else{
+                        encontre=TRUE;
+                    }
+                }
+
+                int contador_pos = ((TNodo) pos_actual->elemento)->contador;
+
+                if(contador==1){
+                    TNodo eliminar = ((TNodo) pos_actual->elemento);
+                    free(eliminar);
+                }
+                else{
+                    contador--;
+                }
+            }
+            i++;
+            cursor_trie= (TNodo)lo_siguiente(pos_actual)->elemento;
+            lo_eliminar(hijos_cursor,pos_actual);
+
+        }
+    }
+    else{
+        eliminado=FALSE;
+    }
+    return eliminado;
+
+}

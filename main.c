@@ -36,6 +36,7 @@
 int funcionComparador(char i, char ii){
     int n1;
     int n2;
+    int respuesta;
 
     n1=(int)i;
 
@@ -43,21 +44,23 @@ int funcionComparador(char i, char ii){
 
     printf("%i,%i",n1,n2);
 
-    if(n1>n2) return 1;
-    if(n1<n2) return -1;
-    if(n1==n2) return 0;
+    if(n1>n2) respuesta= 1;
+    if(n1<n2) respuesta= -1;
+    if(n1==n2) respuesta=0;
+
+    return respuesta;
 
 }
+
 int main(){
 
-char c;
-char B='B';
-c='a';
+    char c;
+    char B='B';
+    c='a';
 
-printf("Comparo a y B: %i\n",funcionComparador(c,B));
+    printf("Comparo a y B: %i\n",funcionComparador(c,B));
 
-return 0;
-
+    return 0;
 }
 
 /**int main()
