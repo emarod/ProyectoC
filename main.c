@@ -2,6 +2,8 @@
 #include <stdlib.h>
 #include <lista.h>
 #include <lista_ordenada.h>
+#include <trie.h>
+#include <string.h>
 
 /**int main()
 {
@@ -60,7 +62,13 @@ int main(){
 
     printf("Comparo a y B: %i\n",funcionComparador(c,B));
 
+    char greeting[6] = {'H', 'e', 'l', 'l', 'o', '\0'};
+    TTrie trie= crear_trie();
+    tr_insertar(trie,greeting);
+    printf("Pertenece el Hello al trie? %i",tr_pertenece(trie,greeting));
+
     return 0;
+
 }
 
 /**int main()

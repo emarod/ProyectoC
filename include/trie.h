@@ -3,17 +3,19 @@
 
 const int TRI_NO_INI;
 
-typedef struct trie {
-    unsigned int cantidad_elementos;
-    TNodo raiz;
-} * TTrie;
-
 typedef struct nodo {
     char rotulo;
     unsigned int contador;
     struct nodo * padre;
     TListaOrdenada hijos;
 } * TNodo;
+
+typedef struct trie {
+    unsigned int cantidad_elementos;
+    TNodo raiz;
+} * TTrie;
+
+
 
 
 //  Retorna un nuevo trie vacio, esto es, con nodo raiz que mantiene el ŕotulo nulo y contador en cero.
