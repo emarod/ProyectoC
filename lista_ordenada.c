@@ -42,13 +42,12 @@ int lo_insertar(TListaOrdenada lista, TElemento elem){
         TPosicion pos=lo_primera(lista);
 
         while(pos!=lo_ultima(lista)){
-            if(comp==1){
-                lista->lista->primera_celda=nuevaCelda;
+            if(comparador(pos->elemento,nuevaCelda->elemento)==-1 || comparador(pos->elemento,nuevaCelda->elemento)==0){
+                nuevaCelda->proxima_celda=pos->proxima_celda;
+                pos->proxima_celda=nuevaCelda;
             }
             else{
                 pos=lo_siguiente(lista,pos);
-                nuevaCelda->proxima_celda=pos;
-                anterior->proxima_celda=nuevaCelda;
             }
 
         }
