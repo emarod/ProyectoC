@@ -7,12 +7,10 @@
 TListaOrdenada crearlistaordenada(int (*f)(void *,void *)){
 
     //Asingo el espacio en memoria para la lista
-    TListaOrdenada lista_ordenada=(TListaOrdenada) malloc(sizeof(TListaOrdenada));
+    TLista lista=(TLista) malloc(sizeof(TListaOrdenada));
 
     //Creo la lista.
-    lista_ordenada->cantidad_elementos=0;
-    lista_ordenada->lista=crear_lista();
-    
+    lista->cantidad_elementos=0;
 
 }
 
@@ -45,27 +43,27 @@ int lo_insertar(TListaOrdenada lista, TElemento elem){
 
 int lo_eliminar(TListaOrdenada lista, TPosicion pos){
 
-    return l_eliminar(lista,pos);
+    return l_eliminar(lista->lista,pos);
 }
 
 TPosicion lo_primera(TListaOrdenada lista){
 
-    return l_primera(lista);
+    return l_primera(lista->lista);
 }
 
 TPosicion lo_ultima(TListaOrdenada lista){
-    return l_ultima(lista);
+    return l_ultima(lista->lista);
 }
 
 TPosicion lo_siguiente(TListaOrdenada lista,TPosicion pos){
 
-    return l_siguiente(lista,pos);
+    return l_siguiente(lista->lista,pos);
 }
 
 TPosicion lo_anterior(TListaOrdenada lista, TPosicion pos){
-    return l_anterior(lista,pos);
+    return l_anterior(lista->lista,pos);
 }
 
 int lo_size(TListaOrdenada lista){
-    return l_size(lista);
+    return l_size(lista->lista);
 }
