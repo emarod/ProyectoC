@@ -2,6 +2,8 @@
 #include <stdlib.h>
 #include <lista.h>
 #include <lista_ordenada.h>
+#include <trie.h>
+#include <string.h>
 
 /**int main()
 {
@@ -36,6 +38,7 @@
 int funcionComparador(char i, char ii){
     int n1;
     int n2;
+    int respuesta;
 
     n1=(int)i;
 
@@ -43,20 +46,28 @@ int funcionComparador(char i, char ii){
 
     printf("%i,%i",n1,n2);
 
-    if(n1>n2) return 1;
-    if(n1<n2) return -1;
-    if(n1==n2) return 0;
+    if(n1>n2) respuesta= 1;
+    if(n1<n2) respuesta= -1;
+    if(n1==n2) respuesta=0;
+
+    return respuesta;
 
 }
+
 int main(){
 
-char c;
-char B='B';
-c='a';
+    char c;
+    char B='B';
+    c='a';
 
-printf("Comparo a y B: %i\n",funcionComparador(c,B));
+    printf("Comparo a y B: %i\n",funcionComparador(c,B));
 
-return 0;
+    char greeting[6] = {'H', 'e', 'l', 'l', 'o', '\0'};
+    TTrie trie= crear_trie();
+    tr_insertar(trie,greeting);
+    printf("Pertenece el Hello al trie? %i",tr_pertenece(trie,greeting));
+
+    return 0;
 
 }
 
