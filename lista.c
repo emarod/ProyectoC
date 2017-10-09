@@ -45,7 +45,7 @@ int l_eliminar(TLista lista, TPosicion pos){
     }
 
     if(pos==NULL){
-        exit(POS_NULA);
+        return POS_NULA;
     }
 
     if(l_primera(lista)==pos){
@@ -83,7 +83,7 @@ TPosicion l_anterior(TLista lista, TPosicion pos){
         exit(LST_NO_INI);
     }
     if(pos!=NULL){
-        exit(POS_NULA);
+        return POS_NULA;
     }
     TCelda celdaPos = lista->primera_celda;
     TCelda celdaAnterior = celdaPos;
