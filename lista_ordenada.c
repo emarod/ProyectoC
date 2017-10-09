@@ -4,7 +4,7 @@
 #include "constantes.h"
 #include "lista.h"
 
-int comp;
+int (*comparador)(void*, void*);
 
 TListaOrdenada crearlistaordenada(int (*f)(void *,void *)){
 
@@ -18,8 +18,7 @@ TListaOrdenada crearlistaordenada(int (*f)(void *,void *)){
     lista_ordenada->lista=crear_lista();
 
     //Creo variable para comparador.
-    void* num,*num2;
-    int comp=(*f)(num, num2);
+    comparador=f;
 
     return lista_ordenada;
 
