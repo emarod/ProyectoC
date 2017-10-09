@@ -7,10 +7,12 @@
 TListaOrdenada crearlistaordenada(int (*f)(void *,void *)){
 
     //Asingo el espacio en memoria para la lista
-    TLista lista=(TLista) malloc(sizeof(TListaOrdenada));
+    TListaOrdenada lista_ordenada=(TListaOrdenada) malloc(sizeof(TListaOrdenada));
 
     //Creo la lista.
-    lista->cantidad_elementos=0;
+    lista_ordenada->cantidad_elementos=0;
+    lista_ordenada->lista=crear_lista();
+    
 
 }
 
