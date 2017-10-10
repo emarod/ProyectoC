@@ -2,7 +2,6 @@
 #define LISTAORDENADA_H_INCLUDED
 #include "lista.h"
 
-//typedef struct lista * TLista;
 typedef struct celda * TPosicion;
 typedef void * TElemento;
 
@@ -14,7 +13,7 @@ typedef struct lista_ordenada {
 //Crea y retorna una lista vacia.
 //Parámetros: el orden de los elementos insertados será dado por la función de comparacíon int f(void *,void *)
 //(f devuelve -1 si el orden del primer argumento es menor que el orden del segundo, 0 si el orden es el mismo,y 1 si el orden del primer argumento es mayor que el orden del segundo)
-TListaOrdenada crearlistaordenada(int (*f)(void *,void *));
+TListaOrdenada crear_lista_ordenada(int (*f)(void *,void *));
 
 
 //Agrega el elemento en la posicíon correspondiente de la lista, de modo que la misma quede siempre ordenada de forma ascendente.

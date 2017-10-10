@@ -5,7 +5,7 @@
 
 TLista crear_lista() {
     //Asigno la cantidad de memoria necesaria.
-    TLista lista_nueva =(TLista) malloc(sizeof(TLista));
+    TLista lista_nueva =malloc(sizeof(struct lista));
 
     //Creo la lista.
 	lista_nueva->cantidad_elementos=0;
@@ -17,7 +17,7 @@ TLista crear_lista() {
 }
 
 int l_insertar(TLista lista, TPosicion pos, TElemento elem){
-    TCelda nuevaCelda = (TCelda) malloc(sizeof(TCelda));
+    TCelda nuevaCelda = (TCelda) malloc(sizeof(struct celda));
     nuevaCelda->elemento=elem;
     nuevaCelda->proxima_celda=POS_NULA;
 
@@ -26,13 +26,21 @@ int l_insertar(TLista lista, TPosicion pos, TElemento elem){
     }
 
     if(pos==POS_NULA || (l_anterior(lista,pos)==pos)){
+        printf("insertando al inicio");
         nuevaCelda->proxima_celda=lista->primera_celda;
         lista->primera_celda=nuevaCelda;
     }
     else{
         TCelda anterior = l_anterior(lista,pos);
         nuevaCelda->proxima_celda=pos;
-        anterior->proxima_celda=nuevaCelda;
+        if(anterior==POS_NULA){
+            nuevaCelda->proxima_celda=lista->primera_celda;
+            lista->primera_celda=nuevaCelda;
+        }
+        else{
+            anterior->proxima_celda=nuevaCelda;
+        }
+
     }
     lista->cantidad_elementos++;
     return TRUE;
@@ -61,6 +69,10 @@ int l_eliminar(TLista lista, TPosicion pos){
 }
 
 TPosicion l_primera(TLista lista){
+    printf("Accediendo al l_primera de lista \n");
+    TElemento pos_e = lista->primera_celda->elemento;
+    int y = *((int*)pos_e);
+    printf("Tus primer pos es pos es %i \n",y);
 
     if(lista->primera_celda==NULL){
         exit(LST_POS_INV);
@@ -74,15 +86,20 @@ TPosicion l_ultima(TLista lista){
     while(celdaPos->proxima_celda!=POS_NULA){
         celdaPos= celdaPos->proxima_celda;
     };
+    printf("Accediendo al l_ultima de lista \n");
+    TElemento pos_e = celdaPos->elemento;
+    int y = *((int*)pos_e);
+    printf("La ultima pos es %i \n",y);
 
     return celdaPos;
 }
 
 TPosicion l_anterior(TLista lista, TPosicion pos){
+    printf("Accediendo a l_anterior de lista \n");
     if(lista->cantidad_elementos== 0){
         exit(LST_NO_INI);
     }
-    if(pos!=NULL){
+    if(pos==NULL){
         return POS_NULA;
     }
     TCelda celdaPos = lista->primera_celda;
@@ -91,6 +108,11 @@ TPosicion l_anterior(TLista lista, TPosicion pos){
         celdaAnterior=celdaPos;
         celdaPos= celdaPos->proxima_celda;
     };
+    TElemento pos_e = pos->elemento;
+    int y = *((int*)pos_e);
+    TElemento pos_x = celdaAnterior->elemento;
+    int x = *((int*)pos_x);
+    printf("El anterior a %i es %i \n",y,x);
 
     return celdaAnterior;
 
@@ -109,7 +131,7 @@ TElemento l_recuperar(TLista lista, TPosicion pos){
         exit(LST_NO_INI);
     }
     if(pos!=NULL){
-        exit((int)ELE_NULO);
+       return ELE_NULO;
     }
     TCelda celdaPos = lista->primera_celda;
     while(celdaPos != pos){

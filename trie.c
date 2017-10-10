@@ -31,7 +31,7 @@ TTrie crear_trie(){
 	//nodo_trie->rotulo=NULL;
 	nodo_trie->contador=0;
 	nodo_trie->padre=NULL;
-    nodo_trie->hijos=crearlistaordenada(comparador);
+    nodo_trie->hijos=crear_lista_ordenada(comparador);
 
     //Agrego el nodo a la raiz del trie.
     trie->raiz=nodo_trie;
@@ -73,7 +73,7 @@ int tr_insertar(TTrie tr, char* str){
         if(existe_nuevo==FALSE){
             nuevo = (TNodo) malloc(sizeof(TNodo));
             nuevo->contador=1;
-            nuevo->hijos=crearlistaordenada(comparador);
+            nuevo->hijos=crear_lista_ordenada(&comparador);
             nuevo->rotulo=str[pos_str];
             nuevo->padre=cursor_trie;
             lo_insertar(hijos_cursor,nuevo);

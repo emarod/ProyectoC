@@ -3,22 +3,25 @@
 #include "lista_ordenada.h"
 #include "constantes.h"
 #include "lista.h"
+#include "trie.h"
 
 int (*comparador)(void*, void*);
 
-TListaOrdenada crearlistaordenada(int (*f)(void *,void *)){
+
+
+TListaOrdenada crear_lista_ordenada(int (*f)(void *,void *)){
 
     //Asingo el espacio en memoria para la lista
-    TListaOrdenada lista_nueva=(TListaOrdenada) malloc(sizeof(TListaOrdenada));
+    TListaOrdenada lista_nueva=(TListaOrdenada) malloc(sizeof(struct lista_ordenada));
 
     //Creo la lista.
     lista_nueva->cantidad_elementos=0;
     lista_nueva->lista=crear_lista();
-    printf("Creando");
+
 
     //Creo variable para comparador.
     comparador=f;
-    printf("Creando elfff trie \n");
+    printf("Creando lista ordenada \n");
 
     return lista_nueva;
 
@@ -31,28 +34,49 @@ int lo_insertar(TListaOrdenada lista, TElemento elem){
     }
 
     if(lista->cantidad_elementos==0){
+        printf("insertando el primero \n");
         l_insertar(lista->lista,POS_NULA,elem);
         lista->cantidad_elementos++;
     }
     else{
+        printf("\n insertando un elemento distinto dle primero \n");
+        TElemento pos_e = elem;
+        int y = *((int*)pos_e);
+        printf("Estoy insertando el elemento %i \n",y);
+
         TPosicion pos=lo_primera(lista);
         int encontre = FALSE;
-        while(pos!=lo_ultima(lista) && encontre==FALSE){
-            if(comparador(elem,pos->elemento)==-1){
+        while(encontre==FALSE){
+            int menor=comparador(elem,pos->elemento);
+            if(menor==-1){
                 l_insertar(lista->lista,pos,elem);
+                encontre=TRUE;
             }
             else{
-                if(comparador(elem,pos->elemento)==0){
+                if(menor==0){
                     encontre=TRUE;
                 }
-                pos=lo_siguiente(lista,pos);
+                else{
+                    printf("El elemento es %i \n",y);
+                    if(pos!=lo_ultima(lista)){
+                        pos=lo_siguiente(lista,pos);
+                    }
+                    else{
+                        printf("El elemento es mayor a todos en la lista \n");
+                        TPosicion nueva_pos= (TPosicion) malloc(sizeof(TPosicion));
+                        nueva_pos->elemento=elem;
+                        nueva_pos->proxima_celda=NULL;
+                        pos->proxima_celda=nueva_pos;
+                        encontre=TRUE;
+                    }
+                }
+
+
             }
 
         }
         lista->cantidad_elementos++;
     }
-
-
     return TRUE;
 }
 
@@ -76,5 +100,5 @@ TPosicion lo_siguiente(TListaOrdenada lista,TPosicion pos){
 }
 
 int lo_size(TListaOrdenada lista){
-    return l_size(lista->lista);
+    return lista->cantidad_elementos;
 }
