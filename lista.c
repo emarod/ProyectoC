@@ -10,8 +10,6 @@ TLista crear_lista() {
     //Creo la lista.
 	lista_nueva->cantidad_elementos=0;
 	lista_nueva->primera_celda=POS_NULA;
-	printf("Creando lista \n");
-	printf("Cantidad de elementos=%i \n",lista_nueva->cantidad_elementos);
 
   return lista_nueva;
 }

@@ -58,7 +58,7 @@ int tr_insertar(TTrie tr, char* str){
         hijos_cursor= cursor_trie->hijos;
         TPosicion pos_nuevo=lo_primera(hijos_cursor);
         int existe_nuevo=FALSE;
-        printf("hijos cursor %i",lo_size(hijos_cursor));
+        printf("hijos cursor %i \n",lo_size(hijos_cursor));
         if(lo_size(hijos_cursor)>0){
             //Busca si hay un elemento (TNODO) que tenga como rotulo el char actual del string.
             while(existe_nuevo==FALSE && pos_nuevo!=POS_NULA){
