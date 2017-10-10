@@ -4,6 +4,22 @@
 #include <lista_ordenada.h>
 #include <trie.h>
 #include <string.h>
+    void imprimir_aux(TListaOrdenada l){
+            TPosicion pos_tr = lo_primera(l);
+            int ii=0;
+            while (pos_tr != NULL) {
+                TNodo nodo = (TNodo) pos_tr->elemento;
+                printf("pos %i-> letra:%c\n", ii, nodo->rotulo);
+                pos_tr = lo_siguiente(l,pos_tr);
+                imprimir_aux(nodo->hijos);
+                ii++;
+            }
+
+        }
+
+    void imprimir_trie(TTrie tr){
+        imprimir_aux(tr->raiz->hijos);
+    }
 
 int comparador2(void* a, void* b){
     printf("Comparador \n");
@@ -78,12 +94,23 @@ int main(){
     printf("----------TEST TRIE---------\n");
     char greeting[6] = {'H', 'e', 'l', 'l', 'o', '\0'};
     TTrie tr= crear_trie();
+    char saludo[] = "Hola";
+    tr_insertar(tr,saludo);
     tr_insertar(tr,greeting);
     int esta = tr_pertenece(tr,greeting);
-    printf("Pertenece el Hello al trie? %i",esta);
-    printf("Pertecne hell al trie? %i",tr_pertenece(tr,"hell"));
-    printf("Pertecne Hell al trie? %i",tr_pertenece(tr,"Hell"));
+    printf("Pertenece el Hello al trie? %i \n",esta);
+    printf("Pertenece hell al trie? %i \n",tr_pertenece(tr,"hell"));
+    printf("Pertenece Hell al trie? %i \n",tr_pertenece(tr,"Hell"));
+
+
+    printf("Pertenece el hola al trie? %i \n",tr_pertenece(tr,"Hola"));
+    printf("Pertecne holu al trie? %i \n",tr_pertenece(tr,"Holu"));
+    printf("Pertecne hol al trie? %i \n",tr_pertenece(tr,"Hol"));
+
+    imprimir_trie(tr);
 
     return 0;
 
 }
+
+

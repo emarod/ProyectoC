@@ -1,6 +1,1 @@
-hola
-Ema
-yo
-te
-amo
-mucho
+Proyecto en C Organizacion de Computadoras UNS
