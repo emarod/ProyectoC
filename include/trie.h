@@ -1,7 +1,6 @@
 #ifndef TRIE_H_INCLUDED
 #define TRIE_H_INCLUDED
-
-const int TRI_NO_INI;
+#include "lista_ordenada.h"
 
 typedef struct nodo {
     char rotulo;

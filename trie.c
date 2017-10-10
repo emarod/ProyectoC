@@ -1,14 +1,15 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "constantes.h"
 #include "trie.h"
 #include "lista_ordenada.h"
+#include "lista.h"
 
 //Ordena los elementos de Menor a Mayor
-int comparador(TElemento a,TElemento b)
-{
-    TNodo charA = ((TNodo) a)->rotulo;
-	TNodo charB = ((TNodo) b)->rotulo;
+int comparador(TElemento a,TElemento b){
+    char charA = ((TNodo) a)->rotulo;
+	char charB = ((TNodo) b)->rotulo;
     if(charA>charB) {return 1;}
     else
     {
@@ -26,8 +27,8 @@ TTrie crear_trie(){
 	trie->cantidad_elementos=0;
     //Creo el TNodo
 
-	TNodo nodo_trie = (TNodo) malloc(sizeof(TTrie));
-	nodo_trie->rotulo=NULL;
+	TNodo nodo_trie = (TNodo) malloc(sizeof(TNodo));
+	//nodo_trie->rotulo=NULL;
 	nodo_trie->contador=0;
 	nodo_trie->padre=NULL;
     nodo_trie->hijos=crearlistaordenada(comparador);
@@ -59,9 +60,9 @@ int tr_insertar(TTrie tr, char* str){
         if(lo_size(hijos_cursor)>0){
             //Busca si hay un elemento (TNODO) que tenga como rotulo el char actual del string.
             while(existe_nuevo==FALSE && pos_nuevo!=POS_NULA){
-                char letra_nuevo= ((TNodo) nuevo->elemento)->rotulo;
-                if(letra_nuevo!=str[i]){
-                    pos_nuevo= lo_siguiente(pos_nuevo);
+                char letra_nuevo= ((TNodo) pos_nuevo->elemento)->rotulo;
+                if(letra_nuevo!=str[pos_str]){
+                    pos_nuevo= lo_siguiente(hijos_cursor,pos_nuevo);
                 }
                 else{
                     existe_nuevo=TRUE;
@@ -72,7 +73,7 @@ int tr_insertar(TTrie tr, char* str){
             nuevo = (TNodo) malloc(sizeof(TNodo));
             nuevo->contador=1;
             nuevo->hijos=crearlistaordenada(comparador);
-            nuevo->rotulo=str[i];
+            nuevo->rotulo=str[pos_str];
             nuevo->padre=cursor_trie;
             lo_insertar(hijos_cursor,nuevo);
             cursor_trie=nuevo;
@@ -97,13 +98,13 @@ int tr_pertenece(TTrie tr, char* str){
     int i=0;
     while(i<srtlen(str) && pertenece==TRUE){
         TListaOrdenada hijos_cursor=cursor_trie->hijos;
+        TPosicion pos_actual=lo_primera(hijos_cursor);
         if(lo_size(hijos_cursor)>0){
-            TPosicion pos_actual=lo_primera(hijos_cursor);
             char letra_trie = ((TNodo)pos_actual->elemento)->rotulo;
             int encontre= FALSE;
             while(encontre==FALSE && pos_actual!=POS_NULA){
                 if(letra_trie!=str[i]){
-                    pos_actual= lo_siguiente(pos_actual);
+                    pos_actual= lo_siguiente(hijos_cursor,pos_actual);
                 }
                 else{
                     encontre=TRUE;
@@ -115,7 +116,7 @@ int tr_pertenece(TTrie tr, char* str){
             }
         }
         i++;
-        cursor_trie= (TNodo) lo_siguiente(pos_actual)->elemento;
+        cursor_trie= (TNodo) lo_siguiente(hijos_cursor,pos_actual)->elemento;
     }
     return pertenece;
 }
@@ -128,13 +129,13 @@ int tr_recuperar(TTrie tr, char* str){
     int i=0;
     while(i<srtlen(str) && recuperar!=STR_NO_PER){
         TListaOrdenada hijos_cursor=cursor_trie->hijos;
+        TPosicion pos_actual=lo_primera(hijos_cursor);
         if(lo_size(hijos_cursor)>0){
-            TPosicion pos_actual=lo_primera(hijos_cursor);
             char letra_trie = ((TNodo)pos_actual->elemento)->rotulo;
             int encontre= FALSE;
             while(encontre==FALSE && pos_actual!=POS_NULA){
                 if(letra_trie!=str[i]){
-                    pos_actual= lo_siguiente(pos_actual);
+                    pos_actual= lo_siguiente(hijos_cursor,pos_actual);
                 }
                 else{
                     encontre=TRUE;
@@ -149,11 +150,9 @@ int tr_recuperar(TTrie tr, char* str){
             }
         }
         i++;
-        cursor_trie= (TNodo) lo_siguiente(pos_actual)->elemento;
+        cursor_trie= (TNodo) pos_actual->elemento;
     }
     return recuperar;
-}
-
 }
 
 //  Retorna la cantidad de palabras almacenadas en el trie.
@@ -171,13 +170,13 @@ int tr_eliminar(TTrie tr, char* str){
     if(pertenece==TRUE){
         while(i<srtlen(str)){
             TListaOrdenada hijos_cursor=cursor_trie->hijos;
+            TPosicion pos_actual=lo_primera(hijos_cursor);
             if(lo_size(hijos_cursor)>0){
-                TPosicion pos_actual=lo_primera(hijos_cursor);
                 char letra_trie = ((TNodo)pos_actual->elemento)->rotulo;
                 int encontre= FALSE;
                 while(encontre==FALSE){
                     if(letra_trie!=str[i]){
-                        pos_actual= lo_siguiente(pos_actual);
+                        pos_actual= lo_siguiente(hijos_cursor,pos_actual);
                     }
                     else{
                         encontre=TRUE;
@@ -186,16 +185,16 @@ int tr_eliminar(TTrie tr, char* str){
 
                 int contador_pos = ((TNodo) pos_actual->elemento)->contador;
 
-                if(contador==1){
+                if(contador_pos==1){
                     TNodo eliminar = ((TNodo) pos_actual->elemento);
                     free(eliminar);
                 }
                 else{
-                    contador--;
+                    contador_pos--;
                 }
             }
             i++;
-            cursor_trie= (TNodo)lo_siguiente(pos_actual)->elemento;
+            cursor_trie= (TNodo) pos_actual->elemento;
             lo_eliminar(hijos_cursor,pos_actual);
 
         }
