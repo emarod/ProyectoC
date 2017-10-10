@@ -68,7 +68,7 @@ int main()
     case 1:{
             printf("%i",opcion);
             while(feof(arch)==0){
-            fscanf(arch,"%s",cadena1);
+            fscanf(arch,"%s",&cadena1);
             printf("%s                         %i\n",cadena1,tr_recuperar(trie,cadena1));
             }
 
@@ -86,25 +86,66 @@ int main()
             break;}
 
     case 3:{
-            char c=NULL;
+            rewind(arch);
+            char *caracter;
             int cant=0;
 
             printf("Ingrese letra:\n");
-            scanf("%c",&c);
+            scanf("%s",caracter);
+            printf("letra ingresada.\n");
 
-            rewind(arch);
+
             while(feof(arch)==0){
-            fscanf(arch,"%s",cadena3);
-            printf("%s \n",cadena3);
-            //if(cadena3̣[0]==c) {cant++;}
+                fscanf(arch,"%s",cadena3);
+                printf("%s ",cadena3);
+                //if(cadena3[0]==caracter[0]){                cant=cant+1;                }
             }
-            printf("La cantidad de veces que %c aparece en el archivo es %i.",c,cant);
+            printf("La cantidad de veces que %c aparece al principio de una palabra es %i.",caracter,cant);
+            break;
             }
+
 
     case 4:{
+            rewind(arch);
+            char *prefijo;
+            int cant2=0;
+            printf("Ingrese palabra prefijo:\n");
+            scanf("%s",prefijo);
+            printf("%s ",prefijo);
 
+
+
+            while(feof(arch)==0){
+                fscanf(arch,"%s",cadena4);
+                printf("%s %s ",cadena4[0],cadena4[1]);
+                //if((cadena4[0]==prefijo[0]) && (cadena4[1]==prefijo[1])) {cant2=cant2+1;}
+            }
+            printf("La cantidad de veces que %s aparece en como prefijo es %i.",prefijo,cant2);
+            break;
             }
 
+    case 5:{
+            rewind(arch);
+            char *prefijo2;
+            int cuento=0;
+            int tamanio_trie=tr_size(trie);
+            double porcentaje;
+
+            printf("Ingrese palabra prefijo:\n");
+            scanf("%s",prefijo2);
+            printf("%s ",prefijo2);
+
+            while(feof(arch)==0){
+                fscanf(arch,"%s",cadena5);
+                //printf("%s %s ",cadena4[0],cadena4[1]);
+                //if((cadena5[0]==prefijo2[0]) && (cadena5[1]==prefijo2[1])) {cuento=cuento+1;}
+            }
+            porcentaje=cuento/tamanio_trie;
+            printf("El porcentaje de veces que %s aparece en como prefijo es %d%.",prefijo2,porcentaje);
+            break;
+
+
+            }
 
 
 
