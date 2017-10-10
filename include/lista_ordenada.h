@@ -2,6 +2,7 @@
 #define LISTAORDENADA_H_INCLUDED
 #include "lista.h"
 
+//typedef int (*TComparador)(void*, void*);
 typedef struct celda * TPosicion;
 typedef void * TElemento;
 

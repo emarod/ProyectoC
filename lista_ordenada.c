@@ -5,10 +5,23 @@
 #include "lista.h"
 #include "trie.h"
 
-int (*comparador)(void*, void*);
+//int (*comparador)(void*, void*);
+int comparador3(void* a, void* b){
+    printf("Comparador \n");
+    char charA = ((TNodo) a)->rotulo;
+	char charB = ((TNodo) b)->rotulo;
+	printf("Letra %c es menor que %c?? \n\n",charA,charB);
 
-
-
+    if(charA>charB) {return 1;}
+    else
+    {
+        if(charA<charB) {
+            printf("Letra %c es menor que %c \n",charA,charB);
+            return -1;
+        }
+        else {return 0;}
+    }
+}
 TListaOrdenada crear_lista_ordenada(int (*f)(void *,void *)){
 
     //Asingo el espacio en memoria para la lista
@@ -18,9 +31,10 @@ TListaOrdenada crear_lista_ordenada(int (*f)(void *,void *)){
     lista_nueva->cantidad_elementos=0;
     lista_nueva->lista=crear_lista();
 
-
+    //printf("%p",&f);
     //Creo variable para comparador.
-    comparador=f;
+    //comparador = malloc();
+    //comparador=f;
     printf("Creando lista ordenada \n");
 
     return lista_nueva;
@@ -47,7 +61,7 @@ int lo_insertar(TListaOrdenada lista, TElemento elem){
         TPosicion pos=lo_primera(lista);
         int encontre = FALSE;
         while(encontre==FALSE){
-            int menor=comparador(elem,pos->elemento);
+            int menor=comparador3(elem,pos->elemento);
             if(menor==-1){
                 l_insertar(lista->lista,pos,elem);
                 encontre=TRUE;

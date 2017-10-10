@@ -5,7 +5,7 @@
 #include <trie.h>
 #include <string.h>
 
-int comparador2(TElemento a,TElemento b){
+int comparador2(void* a, void* b){
     printf("Comparador \n");
     char charA = ((TNodo) a)->rotulo;
 	char charB = ((TNodo) b)->rotulo;
@@ -52,21 +52,29 @@ int main(){
 
     //TEST LISTA ORDENADA
     printf("----------TEST LISTA ORDENADA---------\n");
-    TNodo ch = malloc(sizeof(TNodo));
-    ch->rotulo = 'e';
-    TNodo ch2 = malloc(sizeof(TNodo));
-    ch2->rotulo = 'z';
+    TListaOrdenada test_ord = crear_lista_ordenada(&comparador2);
+
+    TNodo ch1 = malloc(sizeof(TNodo));
+    TNodo ch2= malloc(sizeof(TNodo));
     TNodo ch3 = malloc(sizeof(TNodo));
+
+    ch1->rotulo = 'e';
+    ch2->rotulo = 'z';
     ch3->rotulo = 'j';
-    TListaOrdenada test_ord= crear_lista_ordenada(&comparador2);
-    lo_insertar(test_ord,&ch);
-    printf("La cantidad de elementos en la lista es:%i\n",lo_size(test_ord));
-    lo_insertar(test_ord,&ch2);
-    printf("La cantidad de elementos en la lista es:%i\n",lo_size(test_ord));
-    lo_insertar(test_ord,&ch3);
-    printf("La cantidad de elementos en la lista es:%i\n",lo_size(test_ord));
-    printf("La primer pos es %c \n",((TNodo)lo_primera(test_ord)->elemento)->rotulo);
-    printf("La ultima pos es %c \n",((TNodo)lo_ultima(test_ord)->elemento)->rotulo);
+    lo_insertar(test_ord, ch1);
+    lo_insertar(test_ord, ch2);
+    lo_insertar(test_ord, ch3);
+    printf("Se agregaron %i elementos\n\n", lo_size(test_ord));
+    TPosicion pos_ord = lo_primera(test_ord);
+
+    int i=0;
+    while (pos_ord != NULL) {
+        TNodo nodo = (TNodo) pos_ord->elemento;
+        printf("pos %i-> letra:%c\n", i, nodo->rotulo);
+        pos_ord = lo_siguiente(test_ord,pos_ord);
+        i++;
+    }
+
 
     //char greeting[6] = {'H', 'e', 'l', 'l', 'o', '\0'};
     //TTrie trie= crear_trie();
