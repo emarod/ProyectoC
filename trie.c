@@ -111,14 +111,13 @@ int tr_pertenece(TTrie tr, char* str){
                 }
                 else{
                     encontre=TRUE;
-
                 }
             }
             if (encontre==FALSE){
                 pertenece=FALSE;
             }
             else{
-                cursor_trie= (TNodo) lo_siguiente(hijos_cursor,pos_actual)->elemento;
+                cursor_trie=(TNodo)pos_actual->elemento;
             }
         }
         i++;

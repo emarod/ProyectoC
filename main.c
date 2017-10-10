@@ -81,6 +81,8 @@ int main(){
     tr_insertar(tr,greeting);
     int esta = tr_pertenece(tr,greeting);
     printf("Pertenece el Hello al trie? %i",esta);
+    printf("Pertecne hell al trie? %i",tr_pertenece(tr,"hell"));
+    printf("Pertecne Hell al trie? %i",tr_pertenece(tr,"Hell"));
 
     return 0;
 
