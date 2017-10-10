@@ -73,7 +73,7 @@ int tr_insertar(TTrie tr, char* str){
         if(existe_nuevo==FALSE){
             nuevo = (TNodo) malloc(sizeof(TNodo));
             nuevo->contador=1;
-            nuevo->hijos=crear_lista_ordenada(&comparador);
+            nuevo->hijos=crear_lista_ordenada(comparador);
             nuevo->rotulo=str[pos_str];
             nuevo->padre=cursor_trie;
             lo_insertar(hijos_cursor,nuevo);
@@ -81,10 +81,11 @@ int tr_insertar(TTrie tr, char* str){
         }
         else{
             ((TNodo)pos_nuevo->elemento)->contador++;
+            cursor_trie=(TNodo)pos_nuevo->elemento;
         }
         tr->cantidad_elementos++;
         pos_str++;
-        cursor_trie=(TNodo)pos_nuevo->elemento;
+
 
     }
 
@@ -116,9 +117,12 @@ int tr_pertenece(TTrie tr, char* str){
             if (encontre==FALSE){
                 pertenece=FALSE;
             }
+            else{
+                cursor_trie= (TNodo) lo_siguiente(hijos_cursor,pos_actual)->elemento;
+            }
         }
         i++;
-        cursor_trie= (TNodo) lo_siguiente(hijos_cursor,pos_actual)->elemento;
+
     }
     return pertenece;
 }

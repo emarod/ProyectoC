@@ -70,14 +70,12 @@ int l_eliminar(TLista lista, TPosicion pos){
 
 TPosicion l_primera(TLista lista){
     printf("Accediendo al l_primera de lista \n");
+    if(lista->primera_celda==NULL){
+        return POS_NULA;
+    }
     TElemento pos_e = lista->primera_celda->elemento;
     int y = *((int*)pos_e);
     printf("Tus primer pos es pos es %i \n",y);
-
-    if(lista->primera_celda==NULL){
-        exit(LST_POS_INV);
-    }
-
     return lista->primera_celda;
 }
 
