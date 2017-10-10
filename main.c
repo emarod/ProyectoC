@@ -64,8 +64,10 @@ int main(){
 
     char greeting[6] = {'H', 'e', 'l', 'l', 'o', '\0'};
     TTrie trie= crear_trie();
+    printf("Pertenece el Hello al trie? ");
     tr_insertar(trie,greeting);
-    printf("Pertenece el Hello al trie? %i",tr_pertenece(trie,greeting));
+    int i = tr_pertenece(trie,greeting);
+    printf("Pertenece el Hello al trie? %i",i);
 
     return 0;
 

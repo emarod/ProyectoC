@@ -1,5 +1,5 @@
-#include <stdio.h>
 #include <stdlib.h>
+#include <stdio.h>
 #include <string.h>
 #include "constantes.h"
 #include "trie.h"
@@ -52,6 +52,7 @@ int tr_insertar(TTrie tr, char* str){
     TNodo cursor_trie = tr->raiz;
     TListaOrdenada  hijos_cursor;
     TNodo nuevo;
+    printf("%s",str);
     //Cicla hasta leer todos los characteres del string.
     while(pos_str<long_str){
         hijos_cursor= cursor_trie->hijos;
@@ -96,7 +97,8 @@ int tr_pertenece(TTrie tr, char* str){
     int pertenece= TRUE;
     TNodo cursor_trie= tr->raiz;
     int i=0;
-    while(i<srtlen(str) && pertenece==TRUE){
+    int long_str= strlen(str);
+    while(i<long_str && pertenece==TRUE){
         TListaOrdenada hijos_cursor=cursor_trie->hijos;
         TPosicion pos_actual=lo_primera(hijos_cursor);
         if(lo_size(hijos_cursor)>0){
@@ -127,7 +129,8 @@ int tr_recuperar(TTrie tr, char* str){
     int recuperar;
     TNodo cursor_trie= tr->raiz;
     int i=0;
-    while(i<srtlen(str) && recuperar!=STR_NO_PER){
+    int long_str= strlen(str);
+    while(i<long_str && recuperar!=STR_NO_PER){
         TListaOrdenada hijos_cursor=cursor_trie->hijos;
         TPosicion pos_actual=lo_primera(hijos_cursor);
         if(lo_size(hijos_cursor)>0){
@@ -167,8 +170,9 @@ int tr_eliminar(TTrie tr, char* str){
     int i= 0;
     TNodo cursor_trie= tr->raiz;
     int pertenece = tr_pertenece(tr,str);
+    int long_str= strlen(str);
     if(pertenece==TRUE){
-        while(i<srtlen(str)){
+        while(i<long_str){
             TListaOrdenada hijos_cursor=cursor_trie->hijos;
             TPosicion pos_actual=lo_primera(hijos_cursor);
             if(lo_size(hijos_cursor)>0){
