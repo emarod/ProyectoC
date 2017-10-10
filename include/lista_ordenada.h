@@ -1,7 +1,8 @@
 #ifndef LISTAORDENADA_H_INCLUDED
 #define LISTAORDENADA_H_INCLUDED
+#include "lista.h"
 
-typedef struct lista * TLista;
+//typedef struct lista * TLista;
 typedef struct celda * TPosicion;
 typedef void * TElemento;
 

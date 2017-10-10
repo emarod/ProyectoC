@@ -12,9 +12,14 @@
 				<Option type="1" />
 				<Option compiler="gcc" />
 				<Compiler>
+					<Add option="-Wall" />
+					<Add option="-m32" />
 					<Add option="-g" />
 					<Add directory="include" />
 				</Compiler>
+				<Linker>
+					<Add option="-m32" />
+				</Linker>
 			</Target>
 			<Target title="Release">
 				<Option output="bin/Release/ProyectoC" prefix_auto="1" extension_auto="1" />
@@ -23,10 +28,13 @@
 				<Option compiler="gcc" />
 				<Compiler>
 					<Add option="-O2" />
+					<Add option="-Wall" />
+					<Add option="-m32" />
 					<Add directory="include" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
+					<Add option="-m32" />
 				</Linker>
 			</Target>
 		</Build>
@@ -36,9 +44,7 @@
 		<Unit filename="include/constantes.h" />
 		<Unit filename="include/lista.h" />
 		<Unit filename="include/lista_ordenada.h" />
-		<Unit filename="include/trie.h">
-			<Option target="&lt;{~None~}&gt;" />
-		</Unit>
+		<Unit filename="include/trie.h" />
 		<Unit filename="lista.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -57,7 +63,6 @@
 		</Unit>
 		<Unit filename="trie.c">
 			<Option compilerVar="CC" />
-			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
 		<Extensions>
 			<code_completion />

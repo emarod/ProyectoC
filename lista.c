@@ -5,15 +5,15 @@
 
 TLista crear_lista() {
     //Asigno la cantidad de memoria necesaria.
-    TLista lista =(TLista) malloc(sizeof(TLista));
+    TLista lista_nueva =(TLista) malloc(sizeof(TLista));
 
     //Creo la lista.
-	lista->cantidad_elementos=0;
-	lista->primera_celda=POS_NULA;
+	lista_nueva->cantidad_elementos=0;
+	lista_nueva->primera_celda=POS_NULA;
 	printf("Creando lista \n");
-	printf("Cantidad de elementos=%i \n",lista->cantidad_elementos);
+	printf("Cantidad de elementos=%i \n",lista_nueva->cantidad_elementos);
 
-  return lista;
+  return lista_nueva;
 }
 
 int l_insertar(TLista lista, TPosicion pos, TElemento elem){
@@ -45,7 +45,7 @@ int l_eliminar(TLista lista, TPosicion pos){
     }
 
     if(pos==NULL){
-        return POS_NULA;
+        return (int )POS_NULA;
     }
 
     if(l_primera(lista)==pos){
@@ -109,7 +109,7 @@ TElemento l_recuperar(TLista lista, TPosicion pos){
         exit(LST_NO_INI);
     }
     if(pos!=NULL){
-        exit(ELE_NULO);
+        exit((int)ELE_NULO);
     }
     TCelda celdaPos = lista->primera_celda;
     while(celdaPos != pos){

@@ -8,49 +8,48 @@ int (*comparador)(void*, void*);
 
 TListaOrdenada crearlistaordenada(int (*f)(void *,void *)){
 
-
-
     //Asingo el espacio en memoria para la lista
-    TListaOrdenada lista_ordenada=(TListaOrdenada) malloc(sizeof(TListaOrdenada));
+    TListaOrdenada lista_nueva=(TListaOrdenada) malloc(sizeof(TListaOrdenada));
 
     //Creo la lista.
-    lista_ordenada->cantidad_elementos=0;
-    lista_ordenada->lista=crear_lista();
+    lista_nueva->cantidad_elementos=0;
+    lista_nueva->lista=crear_lista();
+    printf("Creando");
 
     //Creo variable para comparador.
     comparador=f;
+    printf("Creando elfff trie \n");
 
-    return lista_ordenada;
+    return lista_nueva;
 
 }
 
 int lo_insertar(TListaOrdenada lista, TElemento elem){
-
-    TCelda nuevaCelda = (TCelda) malloc(sizeof(TCelda));
-    nuevaCelda->elemento=elem;
-    nuevaCelda->proxima_celda=POS_NULA;
 
     if(lista==NULL){
         exit(LST_NO_INI);
     }
 
     if(lista->cantidad_elementos==0){
-        lo_insertar(lista->lista,elem);
+        l_insertar(lista->lista,POS_NULA,elem);
+        lista->cantidad_elementos++;
     }
-
     else{
         TPosicion pos=lo_primera(lista);
-
-        while(pos!=lo_ultima(lista)){
-            if(comparador(pos->elemento,nuevaCelda->elemento)==-1 || comparador(pos->elemento,nuevaCelda->elemento)==0){
-                nuevaCelda->proxima_celda=pos->proxima_celda;
-                pos->proxima_celda=nuevaCelda;
+        int encontre = FALSE;
+        while(pos!=lo_ultima(lista) && encontre==FALSE){
+            if(comparador(elem,pos->elemento)==-1){
+                l_insertar(lista->lista,pos,elem);
             }
             else{
+                if(comparador(elem,pos->elemento)==0){
+                    encontre=TRUE;
+                }
                 pos=lo_siguiente(lista,pos);
             }
 
         }
+        lista->cantidad_elementos++;
     }
 
 
