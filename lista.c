@@ -26,7 +26,7 @@ int l_insertar(TLista lista, TPosicion pos, TElemento elem){
     }
 
     if(pos==POS_NULA || (l_anterior(lista,pos)==pos)){
-        printf("insertando al inicio");
+        printf("Insertado primera pos");
         nuevaCelda->proxima_celda=lista->primera_celda;
         lista->primera_celda=nuevaCelda;
     }
@@ -34,7 +34,6 @@ int l_insertar(TLista lista, TPosicion pos, TElemento elem){
         TCelda anterior = l_anterior(lista,pos);
         nuevaCelda->proxima_celda=pos;
         if(anterior==POS_NULA){
-            nuevaCelda->proxima_celda=lista->primera_celda;
             lista->primera_celda=nuevaCelda;
         }
         else{
@@ -69,13 +68,13 @@ int l_eliminar(TLista lista, TPosicion pos){
 }
 
 TPosicion l_primera(TLista lista){
-    printf("Accediendo al l_primera de lista \n");
+    //printf("Accediendo al l_primera de lista \n");
     if(lista->primera_celda==NULL){
         return POS_NULA;
     }
     TElemento pos_e = lista->primera_celda->elemento;
     int y = *((int*)pos_e);
-    printf("Tus primer pos es pos es %i \n",y);
+    //printf("Tus primer pos es pos es %i \n",y);
     return lista->primera_celda;
 }
 
@@ -84,16 +83,16 @@ TPosicion l_ultima(TLista lista){
     while(celdaPos->proxima_celda!=POS_NULA){
         celdaPos= celdaPos->proxima_celda;
     };
-    printf("Accediendo al l_ultima de lista \n");
-    TElemento pos_e = celdaPos->elemento;
-    int y = *((int*)pos_e);
-    printf("La ultima pos es %i \n",y);
+    //printf("Accediendo al l_ultima de lista \n");
+    //TElemento pos_e = celdaPos->elemento;
+    //int y = *((int*)pos_e);
+    //printf("La ultima pos es %i \n",y);
 
     return celdaPos;
 }
 
 TPosicion l_anterior(TLista lista, TPosicion pos){
-    printf("Accediendo a l_anterior de lista \n");
+    //printf("Accediendo a l_anterior de lista \n");
     if(lista->cantidad_elementos== 0){
         exit(LST_NO_INI);
     }
@@ -106,11 +105,11 @@ TPosicion l_anterior(TLista lista, TPosicion pos){
         celdaAnterior=celdaPos;
         celdaPos= celdaPos->proxima_celda;
     };
-    TElemento pos_e = pos->elemento;
-    int y = *((int*)pos_e);
-    TElemento pos_x = celdaAnterior->elemento;
-    int x = *((int*)pos_x);
-    printf("El anterior a %i es %i \n",y,x);
+    //TElemento pos_e = pos->elemento;
+    //int y = *((int*)pos_e);
+    //TElemento pos_x = celdaAnterior->elemento;
+    //int x = *((int*)pos_x);
+    //printf("El anterior a %i es %i \n",y,x);
 
     return celdaAnterior;
 

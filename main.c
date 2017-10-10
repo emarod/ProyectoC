@@ -78,11 +78,28 @@ int main(){
     printf("----------TEST TRIE---------\n");
     char greeting[6] = {'H', 'e', 'l', 'l', 'o', '\0'};
     TTrie tr= crear_trie();
+    char saludo[] = "hola";
+    tr_insertar(tr,saludo);
     tr_insertar(tr,greeting);
     int esta = tr_pertenece(tr,greeting);
-    printf("Pertenece el Hello al trie? %i",esta);
-    printf("Pertecne hell al trie? %i",tr_pertenece(tr,"hell"));
-    printf("Pertecne Hell al trie? %i",tr_pertenece(tr,"Hell"));
+    printf("Pertenece el Hello al trie? %i \n",esta);
+    printf("Pertenece hell al trie? %i \n",tr_pertenece(tr,"hell"));
+    printf("Pertenece Hell al trie? %i \n",tr_pertenece(tr,"Hell"));
+
+
+    printf("Pertenece el Hola al trie? %i \n",tr_pertenece(tr,"Hola"));
+    printf("Pertecne Holu al trie? %i \n",tr_pertenece(tr,"Holu"));
+    printf("Pertecne Hol al trie? %i \n",tr_pertenece(tr,"Hol"));
+
+    TPosicion pos_tr = lo_primera(tr->raiz->hijos);
+
+    int ii=0;
+    while (pos_tr != NULL) {
+        TNodo nodo = (TNodo) pos_tr->elemento;
+        printf("pos %i-> letra:%c\n", ii, nodo->rotulo);
+        pos_tr = lo_siguiente(test_ord,pos_ord);
+        ii++;
+    }
 
     return 0;
 

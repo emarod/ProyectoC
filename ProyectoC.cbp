@@ -41,6 +41,9 @@
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
+		<Unit filename="evaluador.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="include/constantes.h" />
 		<Unit filename="include/lista.h" />
 		<Unit filename="include/lista_ordenada.h" />
