@@ -103,9 +103,9 @@ int main(){
     printf("Pertenece Hell al trie? %i \n",tr_pertenece(tr,"Hell"));
 
 
-    printf("Pertenece el hola al trie? %i \n",tr_pertenece(tr,"Hola"));
-    printf("Pertecne holu al trie? %i \n",tr_pertenece(tr,"Holu"));
-    printf("Pertecne hol al trie? %i \n",tr_pertenece(tr,"Hol"));
+    printf("Pertenece el Hola al trie? %i \n",tr_pertenece(tr,"Hola"));
+    printf("Pertecne Holu al trie? %i \n",tr_pertenece(tr,"Holu"));
+    printf("Pertecne Hol al trie? %i \n",tr_pertenece(tr,"Hol"));
 
     imprimir_trie(tr);
 

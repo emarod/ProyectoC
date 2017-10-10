@@ -18,6 +18,23 @@ int comparador(TElemento a,TElemento b){
     }
 }
 
+TPosicion buscar_posNodo(TListaOrdenada l,char r){
+    TPosicion pos_tr = lo_primera(l);
+    int encontre= FALSE;
+    while (pos_tr != NULL && encontre==FALSE) {
+        TNodo nodo = (TNodo) pos_tr->elemento;
+        printf("Letra %c es igual a %c?? \n\n",r,nodo->rotulo);
+        if(r==nodo->rotulo){
+            encontre=TRUE;
+        }
+        else{
+            pos_tr = lo_siguiente(l,pos_tr);
+        }
+
+    }
+    return pos_tr;
+}
+
 //  Retorna un nuevo trie vacio, esto es, con nodo raiz que mantiene el ŕotulo nulo y contador en cero.
 TTrie crear_trie(){
     //Asigno la cantidad de memoria necesaria.
@@ -63,6 +80,7 @@ int tr_insertar(TTrie tr, char* str){
             //Busca si hay un elemento (TNODO) que tenga como rotulo el char actual del string.
             while(existe_nuevo==FALSE && pos_nuevo!=POS_NULA){
                 char letra_nuevo= ((TNodo) pos_nuevo->elemento)->rotulo;
+                printf("Letra %c es menor que %c?? \n\n",letra_nuevo,str[pos_str]);
                 if(letra_nuevo!=str[pos_str]){
                     pos_nuevo= lo_siguiente(hijos_cursor,pos_nuevo);
                 }
@@ -98,31 +116,20 @@ int tr_insertar(TTrie tr, char* str){
 int tr_pertenece(TTrie tr, char* str){
     int pertenece= TRUE;
     TNodo cursor_trie= tr->raiz;
+    TListaOrdenada hijos_cursor;
     int i=0;
     int long_str= strlen(str);
+    TPosicion pos_actual;
     while(i<long_str && pertenece==TRUE){
-        TListaOrdenada hijos_cursor=cursor_trie->hijos;
-        TPosicion pos_actual=lo_primera(hijos_cursor);
-        if(lo_size(hijos_cursor)>0){
-            char letra_trie = ((TNodo)pos_actual->elemento)->rotulo;
-            int encontre= FALSE;
-            while(encontre==FALSE && pos_actual!=POS_NULA){
-                if(letra_trie!=str[i]){
-                    pos_actual= lo_siguiente(hijos_cursor,pos_actual);
-                }
-                else{
-                    encontre=TRUE;
-                }
-            }
-            if (encontre==FALSE){
-                pertenece=FALSE;
-            }
-            else{
-                cursor_trie=(TNodo)pos_actual->elemento;
-            }
+        hijos_cursor=cursor_trie->hijos;
+        pos_actual=buscar_posNodo(hijos_cursor,str[i]);
+        if(pos_actual==POS_NULA){
+            pertenece=FALSE;
+        }
+        else{
+            cursor_trie=(TNodo)pos_actual->elemento;
         }
         i++;
-
     }
     return pertenece;
 }
