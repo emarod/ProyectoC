@@ -32,14 +32,25 @@ int main()
 
         fscanf(arch,"%s",car);
         tr_insertar(trie,car);
-        printf("%s ",car);
+        //printf("%s ",car);
     }
+
 
 
     printf("\n\nEl archivo se ha leido correctamente.\n\n");
 
+    rewind(arch);
+
+    char *cadena1;
+    char *cadena2;
+    char *cadena3;
+    char *cadena4;
+    char *cadena5;
+    char *cadena6;
+
+
     printf("----------------MENU DE PROGRAMA----------------\n");
-    printf("Elija una opcion del (1) al (6):\n\n");
+
     printf("(1) Mostrar Palabras.\n");
     printf("(2) Consultar.\n");
     printf("(3) Comienzan con:\n");
@@ -47,16 +58,16 @@ int main()
     printf("(5) Porcentaje prefijo:\n");
     printf("(6) Salir.\n");
 
+    printf("Elija una opcion del (1) al (6):\n");
     int opcion;
     scanf("%i",&opcion);
 
     switch(opcion){
     case 1:{
-            while(feof(arch)==0){
 
-            fscanf(arch,"%s",car);
-            tr_insertar(trie,car);
-            printf("%s                         %i\n",car,tr_recuperar(trie,car));
+            while(feof(arch)==0){
+            fscanf(arch,"%s",cadena1);
+            printf("%s                         %i\n",car,tr_recuperar(trie,cadena1));
             }
 
             break;}
@@ -68,9 +79,20 @@ int main()
                 printf("La palabra %s pertenece al archivo y aparece %i veces.\n\n",palabra,tr_recuperar(trie,palabra));
             }
             else{
-                printf("La palabra %s no pertenec al archivo.\n\n",palabra);
+                printf("La palabra %s no pertenece al archivo.\n\n",palabra);
             }
             break;}
+
+    case 3:{
+            rewind(arch);
+            char *cadena2;
+            while(feof(arch)==0){
+            fscanf(arch,"%s",cadena2);
+            }
+
+
+
+            }
 
 
     }
