@@ -23,7 +23,6 @@ TPosicion buscar_posNodo(TListaOrdenada l,char r){
     int encontre= FALSE;
     while (pos_tr != NULL && encontre==FALSE) {
         TNodo nodo = (TNodo) pos_tr->elemento;
-        printf("Letra %c es igual a %c?? \n\n",r,nodo->rotulo);
         if(r==nodo->rotulo){
             encontre=TRUE;
         }
@@ -53,9 +52,6 @@ TTrie crear_trie(){
     //Agrego el nodo a la raiz del trie.
     trie->raiz=nodo_trie;
 
-	printf("Creando el trie \n");
-	printf("Cantidad de elementos=%i \n",trie->cantidad_elementos);
-
   return trie;
 }
 
@@ -80,7 +76,6 @@ int tr_insertar(TTrie tr, char* str){
             //Busca si hay un elemento (TNODO) que tenga como rotulo el char actual del string.
             while(existe_nuevo==FALSE && pos_nuevo!=POS_NULA){
                 char letra_nuevo= ((TNodo) pos_nuevo->elemento)->rotulo;
-                printf("Letra %c es menor que %c?? \n\n",letra_nuevo,str[pos_str]);
                 if(letra_nuevo!=str[pos_str]){
                     pos_nuevo= lo_siguiente(hijos_cursor,pos_nuevo);
                 }
@@ -141,31 +136,24 @@ int tr_recuperar(TTrie tr, char* str){
     TNodo cursor_trie= tr->raiz;
     int i=0;
     int long_str= strlen(str);
+    TListaOrdenada hijos_cursor;
+    TPosicion pos_actual;
     while(i<long_str && recuperar!=STR_NO_PER){
-        TListaOrdenada hijos_cursor=cursor_trie->hijos;
-        TPosicion pos_actual=lo_primera(hijos_cursor);
-        if(lo_size(hijos_cursor)>0){
-            char letra_trie = ((TNodo)pos_actual->elemento)->rotulo;
-            int encontre= FALSE;
-            while(encontre==FALSE && pos_actual!=POS_NULA){
-                if(letra_trie!=str[i]){
-                    pos_actual= lo_siguiente(hijos_cursor,pos_actual);
-                }
-                else{
-                    encontre=TRUE;
-
-                }
-            }
-            if (encontre==FALSE){
-                recuperar=STR_NO_PER;
-            }
-            else{
-                recuperar=((TNodo) pos_actual->elemento)->contador;
-            }
+        hijos_cursor=cursor_trie->hijos;
+        pos_actual=buscar_posNodo(hijos_cursor,str[i]);
+        if (pos_actual==POS_NULA){
+            recuperar=STR_NO_PER;
+        }
+        else{
+            cursor_trie= (TNodo) pos_actual->elemento;
+            recuperar=((TNodo) pos_actual->elemento)->contador;
         }
         i++;
-        cursor_trie= (TNodo) pos_actual->elemento;
+
     }
+
+
+
     return recuperar;
 }
 

@@ -17,7 +17,6 @@ TListaOrdenada crear_lista_ordenada(int (*f)(void *,void *)){
 
     //Creo variable para comparador.
     comparator=f;
-    //printf("Creando lista ordenada \n");
 
     return lista_nueva;
 
@@ -35,11 +34,6 @@ int lo_insertar(TListaOrdenada lista, TElemento elem){
         lista->cantidad_elementos++;
     }
     else{
-        //printf("\n insertando un elemento distinto dle primero \n");
-        //TElemento pos_e = elem;
-        //int y = *((int*)pos_e);
-        //printf("Estoy insertando el elemento %i \n",y);
-
         TPosicion pos=lo_primera(lista);
         int encontre = FALSE;
         while(encontre==FALSE){
@@ -53,7 +47,6 @@ int lo_insertar(TListaOrdenada lista, TElemento elem){
                     encontre=TRUE;
                 }
                 else{
-                    //printf("El elemento es %i \n",y);
                     if(pos!=lo_ultima(lista)){
                         pos=lo_siguiente(lista,pos);
                     }

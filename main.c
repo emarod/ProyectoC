@@ -9,7 +9,10 @@
             int ii=0;
             while (pos_tr != NULL) {
                 TNodo nodo = (TNodo) pos_tr->elemento;
-                printf("pos %i-> letra:%c\n", ii, nodo->rotulo);
+                if(ii==0){
+                //    printf("\n");
+                }
+                printf("%c",nodo->rotulo);
                 pos_tr = lo_siguiente(l,pos_tr);
                 imprimir_aux(nodo->hijos);
                 ii++;
@@ -106,8 +109,8 @@ int main(){
     printf("Pertenece el Hola al trie? %i \n",tr_pertenece(tr,"Hola"));
     printf("Pertecne Holu al trie? %i \n",tr_pertenece(tr,"Holu"));
     printf("Pertecne Hol al trie? %i \n",tr_pertenece(tr,"Hol"));
-
     imprimir_trie(tr);
+    tr_eliminar(tr,greeting);
 
     return 0;
 
