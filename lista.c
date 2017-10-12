@@ -59,8 +59,13 @@ int l_eliminar(TLista lista, TPosicion pos){
         TCelda anterior = l_anterior(lista,pos);
         anterior->proxima_celda = pos->proxima_celda;
     }
+    pos->elemento=NULL;
+    pos->proxima_celda=NULL;
     free(pos);
     lista->cantidad_elementos--;
+    if(lista->cantidad_elementos==0){
+        lista->primera_celda=NULL;
+    }
     return 0;
 }
 

@@ -41,9 +41,6 @@
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
-		<Unit filename="evaluador.c">
-			<Option compilerVar="CC" />
-		</Unit>
 		<Unit filename="include/constantes.h" />
 		<Unit filename="include/lista.h" />
 		<Unit filename="include/lista_ordenada.h" />
@@ -58,10 +55,6 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="src/lista.cpp">
-			<Option target="&lt;{~None~}&gt;" />
-		</Unit>
-		<Unit filename="testTrie.c">
-			<Option compilerVar="CC" />
 			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
 		<Unit filename="trie.c">

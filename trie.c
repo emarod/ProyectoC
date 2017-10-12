@@ -37,14 +37,14 @@ TPosicion buscar_posNodo(TListaOrdenada l,char r){
 //  Retorna un nuevo trie vacio, esto es, con nodo raiz que mantiene el ŕotulo nulo y contador en cero.
 TTrie crear_trie(){
     //Asigno la cantidad de memoria necesaria.
-    TTrie trie =(TTrie) malloc(sizeof(TTrie));
+    TTrie trie =malloc(sizeof(struct trie));
 
     //Creo el trie.
 	trie->cantidad_elementos=0;
     //Creo el TNodo
 
-	TNodo nodo_trie = (TNodo) malloc(sizeof(TNodo));
-	//nodo_trie->rotulo=NULL;
+	TNodo nodo_trie = malloc(sizeof(struct nodo));
+	nodo_trie->rotulo='\0';
 	nodo_trie->contador=0;
 	nodo_trie->padre=NULL;
     nodo_trie->hijos=crear_lista_ordenada(comparador);
@@ -85,7 +85,7 @@ int tr_insertar(TTrie tr, char* str){
             }
         }
         if(existe_nuevo==FALSE){
-            nuevo = (TNodo) malloc(sizeof(TNodo));
+            nuevo =malloc(sizeof( struct nodo));
             nuevo->contador=1;
             nuevo->hijos=crear_lista_ordenada(comparador);
             nuevo->rotulo=str[pos_str];
@@ -162,45 +162,36 @@ int tr_size(TTrie tr){
     return tr->cantidad_elementos;
 }
 
-//  Elimina el string str dentro del trie, liberando la memoria utilizada.
-//  Retorna verdadero en caso de operacion exitosa, y falso en caso contrario.
 int tr_eliminar(TTrie tr, char* str){
     int eliminado=TRUE;
     int i= 0;
-    TNodo cursor_trie= tr->raiz;
     int pertenece = tr_pertenece(tr,str);
     int long_str= strlen(str);
+    TListaOrdenada hijos_cursor=((TNodo) tr->raiz)->hijos;
+    TPosicion pos_actual;
+    TNodo nodo_borrar;
     if(pertenece==TRUE){
         while(i<long_str){
-            TListaOrdenada hijos_cursor=cursor_trie->hijos;
-            TPosicion pos_actual=lo_primera(hijos_cursor);
-            if(lo_size(hijos_cursor)>0){
-                char letra_trie = ((TNodo)pos_actual->elemento)->rotulo;
-                int encontre= FALSE;
-                while(encontre==FALSE){
-                    if(letra_trie!=str[i]){
-                        pos_actual= lo_siguiente(hijos_cursor,pos_actual);
-                    }
-                    else{
-                        encontre=TRUE;
-                    }
-                }
-
-                int contador_pos = ((TNodo) pos_actual->elemento)->contador;
-
-                if(contador_pos==1){
-                    TNodo eliminar = ((TNodo) pos_actual->elemento);
-                    free(eliminar);
-                }
-                else{
-                    contador_pos--;
-                }
+            pos_actual=buscar_posNodo(hijos_cursor,str[i]);
+            nodo_borrar = (TNodo) pos_actual->elemento;
+            int contador_pos = nodo_borrar->contador;
+            if(contador_pos==1){
+                lo_eliminar(hijos_cursor,pos_actual);
             }
+            else{
+                contador_pos--;
+            }
+            hijos_cursor=nodo_borrar->hijos;
             i++;
-            cursor_trie= (TNodo) pos_actual->elemento;
-            lo_eliminar(hijos_cursor,pos_actual);
-
         }
+        while(nodo_borrar->rotulo!='\0' && nodo_borrar->contador==1){
+            TNodo padre= nodo_borrar->padre;
+            TListaOrdenada lista_borrar=nodo_borrar->hijos;
+            free(lista_borrar);
+            free(nodo_borrar);
+            nodo_borrar=padre;
+        }
+
     }
     else{
         eliminado=FALSE;
@@ -208,3 +199,7 @@ int tr_eliminar(TTrie tr, char* str){
     return eliminado;
 
 }
+
+//  Elimina el string str dentro del trie, liberando la memoria utilizada.
+//  Retorna verdadero en caso de operacion exitosa, y falso en caso contrario.
+

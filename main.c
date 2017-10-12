@@ -4,24 +4,23 @@
 #include <lista_ordenada.h>
 #include <trie.h>
 #include <string.h>
-    void imprimir_aux(TListaOrdenada l){
-            TPosicion pos_tr = lo_primera(l);
-            int ii=0;
-            while (pos_tr != NULL) {
-                TNodo nodo = (TNodo) pos_tr->elemento;
-                if(ii==0){
-                //    printf("\n");
-                }
-                printf("%c",nodo->rotulo);
-                pos_tr = lo_siguiente(l,pos_tr);
-                imprimir_aux(nodo->hijos);
-                ii++;
+    void imprimir_aux(TListaOrdenada lo){
+        TPosicion pos_tr = lo_primera(lo);
+        while (pos_tr != NULL) {
+            TNodo nodo = (TNodo) pos_tr->elemento;
+            printf("%c",nodo->rotulo);
+            pos_tr = lo_siguiente(lo,pos_tr);
+            if(nodo->hijos->cantidad_elementos==0){
+                printf("\n");
             }
-
+            imprimir_aux(nodo->hijos);
         }
+    }
 
     void imprimir_trie(TTrie tr){
+        printf("Trie actual: \n");
         imprimir_aux(tr->raiz->hijos);
+        printf("\n");
     }
 
 int comparador2(void* a, void* b){
@@ -110,7 +109,10 @@ int main(){
     printf("Pertecne Holu al trie? %i \n",tr_pertenece(tr,"Holu"));
     printf("Pertecne Hol al trie? %i \n",tr_pertenece(tr,"Hol"));
     imprimir_trie(tr);
+    printf("Borrando string Hello..\n");
     tr_eliminar(tr,greeting);
+
+    imprimir_trie(tr);
 
     return 0;
 

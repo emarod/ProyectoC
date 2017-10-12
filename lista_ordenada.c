@@ -9,7 +9,7 @@ int (*comparator)(void *,void *);
 TListaOrdenada crear_lista_ordenada(int (*f)(void *,void *)){
 
     //Asingo el espacio en memoria para la lista
-    TListaOrdenada lista_nueva=(TListaOrdenada) malloc(sizeof(struct lista_ordenada));
+    TListaOrdenada lista_nueva=malloc(sizeof(struct lista_ordenada));
 
     //Creo la lista.
     lista_nueva->cantidad_elementos=0;
@@ -70,8 +70,12 @@ int lo_insertar(TListaOrdenada lista, TElemento elem){
 }
 
 int lo_eliminar(TListaOrdenada lista, TPosicion pos){
-
-    return l_eliminar(lista->lista,pos);
+    l_eliminar(lista->lista,pos);
+    lista->cantidad_elementos--;
+    if(lista->cantidad_elementos==0){
+        free(lista->lista);
+    }
+    return TRUE;
 }
 
 TPosicion lo_primera(TListaOrdenada lista){
