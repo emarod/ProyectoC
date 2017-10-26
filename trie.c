@@ -60,18 +60,22 @@ TTrie crear_trie(){
 //  aumenta el valor del contador asociado a dicho string en una unidad.
 //  Retorna verdadero si la insercíon fue exitosa, falso en caso de que el string ya perteneciera al trie.
 int tr_insertar(TTrie tr, char* str){
+
+    if(tr==NULL){
+        exit(TRI_NO_INI);
+    }
+
     int long_str= strlen(str);
     int pos_str=0;
     TNodo cursor_trie = tr->raiz;
     TListaOrdenada  hijos_cursor;
     TNodo nuevo;
-    printf("str %s\n",str);
     //Cicla hasta leer todos los characteres del string.
     while(pos_str<long_str){
         hijos_cursor= cursor_trie->hijos;
         TPosicion pos_nuevo=lo_primera(hijos_cursor);
         int existe_nuevo=FALSE;
-        printf("hijos cursor %i \n",lo_size(hijos_cursor));
+        //printf("hijos cursor %i \n",lo_size(hijos_cursor));
         if(lo_size(hijos_cursor)>0){
             //Busca si hay un elemento (TNODO) que tenga como rotulo el char actual del string.
             while(existe_nuevo==FALSE && pos_nuevo!=POS_NULA){
@@ -97,18 +101,19 @@ int tr_insertar(TTrie tr, char* str){
             ((TNodo)pos_nuevo->elemento)->contador++;
             cursor_trie=(TNodo)pos_nuevo->elemento;
         }
-        tr->cantidad_elementos++;
         pos_str++;
-
-
     }
-
+    tr->cantidad_elementos++;
     return TRUE;
 
 }
 
 //  Retorna verdadero si el string srt pertenece al trie, falso en caso contrario.
 int tr_pertenece(TTrie tr, char* str){
+
+    if(tr==NULL){
+        exit(TRI_NO_INI);
+    }
     int pertenece= TRUE;
     TNodo cursor_trie= tr->raiz;
     TListaOrdenada hijos_cursor;
@@ -132,6 +137,10 @@ int tr_pertenece(TTrie tr, char* str){
 //  Retorna  el  entero  asociado  al  string str dentro del trie.
 //  Si el string no pertenece al trie, retorna STR_NO_PER.
 int tr_recuperar(TTrie tr, char* str){
+    if(tr==NULL){
+        exit(TRI_NO_INI);
+    }
+
     int recuperar;
     TNodo cursor_trie= tr->raiz;
     int i=0;
@@ -151,18 +160,25 @@ int tr_recuperar(TTrie tr, char* str){
         i++;
 
     }
-
-
-
     return recuperar;
 }
 
 //  Retorna la cantidad de palabras almacenadas en el trie.
 int tr_size(TTrie tr){
+    if(tr==NULL){
+        exit(TRI_NO_INI);
+    }
     return tr->cantidad_elementos;
 }
 
+
+//  Elimina el string str dentro del trie, liberando la memoria utilizada.
+//  Retorna verdadero en caso de operacion exitosa, y falso en caso contrario.
+
 int tr_eliminar(TTrie tr, char* str){
+    if(tr==NULL){
+        exit(TRI_NO_INI);
+    }
     int eliminado=TRUE;
     int i= 0;
     int pertenece = tr_pertenece(tr,str);
@@ -199,7 +215,3 @@ int tr_eliminar(TTrie tr, char* str){
     return eliminado;
 
 }
-
-//  Elimina el string str dentro del trie, liberando la memoria utilizada.
-//  Retorna verdadero en caso de operacion exitosa, y falso en caso contrario.
-

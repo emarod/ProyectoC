@@ -99,6 +99,11 @@ int main(){
     char saludo[] = "Hola";
     tr_insertar(tr,saludo);
     tr_insertar(tr,greeting);
+    tr_insertar(tr,"perro");
+    tr_insertar(tr,"sun");
+    tr_insertar(tr,"casa");
+    tr_insertar(tr,"casamiento");
+    tr_insertar(tr,"casamiento");
     int esta = tr_pertenece(tr,greeting);
     printf("Pertenece el Hello al trie? %i \n",esta);
     printf("Pertenece hell al trie? %i \n",tr_pertenece(tr,"hell"));
@@ -111,6 +116,8 @@ int main(){
     imprimir_trie(tr);
     printf("Borrando string Hello..\n");
     tr_eliminar(tr,greeting);
+    tr_eliminar(tr,"casamiento");
+    tr_eliminar(tr,"casa");
 
     imprimir_trie(tr);
 

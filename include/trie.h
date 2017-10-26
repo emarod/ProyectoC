@@ -15,9 +15,6 @@ typedef struct trie {
     TNodo raiz;
 } * TTrie;
 
-
-
-
 //  Retorna un nuevo trie vacio, esto es, con nodo raiz que mantiene el ŕotulo nulo y contador en cero.
 TTrie crear_trie();
 

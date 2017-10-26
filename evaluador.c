@@ -5,59 +5,56 @@
 #include <errno.h>
 #include "trie.h"
 #include "lista_ordenada.h"
+#include "lista.h"
 
-void cargar_trie(TTrie t,FILE* file){
-
-    char buf[4096];
-    ssize_t n;
-    char *str = NULL;
-    size_t len = 0;
-    while ((n = read(STDIN_FILENO, buf, sizeof buf))) {
-        if (n < 0) {
-            if (errno == EAGAIN)
-                continue;
-            perror("read");
-            break;
+void imprimir_hojas(TLista lista){
+    int i = 0;
+    //La lista contiene hojas por ende son ultimas letras.
+    TPosicion ultima_letra = l_primera(lista);
+    while (i<l_size(lista)){
+        TNodo n_letra= (TNodo) ultima_letra->elemento;
+        int apariciones=n_letra->contador;
+        char palabra[20];
+        int letra_pos=19;
+        while (n_letra->rotulo!='\0' && letra_pos>=0){
+            palabra[letra_pos]=n_letra->rotulo;
+            letra_pos--;
+            n_letra=n_letra->padre;
         }
-        str = realloc(str, len + n + 1);
-        memcpy(str + len, buf, n);
-        len += n;
-        str[len] = '\0';
-    }
-    printf("%.*s\n", len, str);
-
-}
-
-
-void imprimir_aux(TListaOrdenada l){
-    TPosicion pos_tr = lo_primera(l);
-    int ii=0;
-    while (pos_tr != NULL) {
-        TNodo nodo = (TNodo) pos_tr->elemento;
-        printf("pos %i-> letra:%c\n", ii, nodo->rotulo);
-        pos_tr = lo_siguiente(l,pos_tr);
-        imprimir_aux(nodo->hijos);
-        ii++;
+        printf("La palabra '%s' aperecio %i veces",palabra, apariciones);
+        i++;
+        ultima_letra= l_siguiente(lista,ultima_letra);
     }
 }
 
-void imprimir_trie(TTrie tr){
-    imprimir_aux(tr->raiz->hijos);
+void guardar_hojas_aux(TNodo nodo,TLista lista){
+    while(nodo!=NULL){
+        if (lo_size(nodo->hijos)==0){
+            l_insertar(lista,NULL,nodo);
+        }
+        else{
+            int i=0;
+            while(i<lo_size(nodo->hijos)){
+                guardar_hojas_aux(nodo,lista);
+            }
+        }
+    }
 }
 
-int main()
-{
+//Guarda en una lista todas las hojas del trie. De esta forma se tiene la última letra de cada palabra.
+TLista guardar_hojas(TTrie tr){
+    TLista lista = crear_lista();
+    guardar_hojas_aux(tr->raiz,lista);
+    return lista;
+}
+
+int main(){
+
     printf("Proyecto C TRIE\n");
 
     printf("Ingrese nombre del archivo a utilizar junto (sin extension .txt):\n\n");
 
     char nombre[50];
-    char *cadena1=NULL;
-    char *cadena2=NULL;
-    char *cadena3=NULL;
-    char *cadena4=NULL;
-    char *cadena5=NULL;
-    //char *cadena6;
 
     scanf("%s",nombre);
 
@@ -71,29 +68,26 @@ int main()
         "\n\nEl archivo tiene error.\n\n");
     }
     else {
-        printf("\n\nEl archivo esta abeirto para leer.\n\n");
+        printf("\n\nEl archivo esta abierto para leer.\n\n");
     }
-
-    char *car=NULL;
 
     TTrie trie=crear_trie();
+    TLista hojas= guardar_hojas(trie);
+
+    char palabra[100];
 
     while(feof(arch)==0){
+        fscanf(arch,"%s",palabra);
 
-        fscanf(arch,"%s",car);
-        tr_insertar(trie,car);
-        printf("%s ",car);
+        //printf("%s ",palabra);
+        tr_insertar(trie,palabra);
     }
-    imprimir_trie(trie);
 
+    fclose(arch);
 
-        //fclose(arch);
-
-
-
+    //printf("%i esta",tr_pertenece(trie,"empalmes"));
     printf("\n\nEl archivo se ha leido correctamente.\n\n");
 
-    arch=fopen(nombre,"rb");
     int opcion=0;
     while (opcion!=6){
     printf("----------------MENU DE PROGRAMA----------------\n");
@@ -108,16 +102,14 @@ int main()
     printf("Elija una opcion del (1) al (6):\n");
 
     scanf("%i",&opcion);
-
+    //int termine = FALSE;
     switch(opcion){
-    case 1:{
-            printf("%i",opcion);
-            while(feof(arch)==0){
-                fscanf(arch,"%s",cadena1);
-                printf("%s                         %i\n",cadena1,tr_recuperar(trie,cadena1));
-            }
-
-            break;}
+        case 1:
+            printf("Opcion 1. Se imprime todas las palabras y apariciones");
+            imprimir_hojas(hojas);
+        break;
+    }
+/**
     case 2:{
             printf("Ingrese palabra para consultar si pertenece: \n");
             scanf("%s", cadena2);
@@ -195,18 +187,10 @@ int main()
 
 
     }
+    **/
 }
 
 printf("Adiós.\n");
 
 
-
-
-
-
-
-
-
-
-    fclose(arch);
 }
